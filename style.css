@@ -1,0 +1,110 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  
+}
+canvas {
+  padding-left: 0;
+  padding-right: 0;
+ margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+ margin-bottom: auto;
+  display: block;
+  width: 800px;
+}
+
+.myButton {
+  font-size: 20px;
+
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: #000000;
+  border-style: none;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  color: #ffffff;
+  /* border-radius: 100%; */
+/*   padding: 20px, 25px; */
+ 
+}
+
+.myButton:hover {
+  transition-duration: 0.5s;
+  background-color: #ffffff;
+  color: #020202 ;
+  border: 2px solid black;
+}
+
+.saveButton{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 150px;
+  height: 45px;
+  border-style: none;
+  background-color: #040404;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  transition-duration: 0.5s;
+  background-color: #ffffff;
+  color: #020202 ;
+  border: 2px solid black;
+}
+
+.dropdown{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 150px;
+  height: 45px;
+  border: 2px solid black;
+  font-size: 16px;
+}
+
+.Instruction{
+  font-family: 'Helvetica', sans-serif;
+  font-size: 16px;
+  color: rgb(7, 7, 7);
+  border-style: none;
+  background-color: #ffffff;
+}
+
+.sizeSlider{
+  width: 150px;
+  height: 2px;
+  background-color: #000000;
+  
+  /* Removes some defaults */
+  -webkit-appearance: none;
+}
+
+.sizeSlider:hover {
+  opacity: 0.7; /* Fully shown on mouse-over */
+}
+
+.sizeSlider::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background: #000000;
+  cursor: pointer;
+  -webkit-appearance: none;
+  
+  /* negative top padding moves it up */
+  margin-top: 0px;
+
+  
+  /* Border radius gives rounded corners, if they're big enough, you end up with circles */
+  border-radius: 50%;
+  
+}
+
+.myRadio{
+  height: 35px;
+  padding-top:8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border: 2px solid black;
+}

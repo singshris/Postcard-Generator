@@ -20,6 +20,7 @@ let saveButton;
 let selectedColor;
 let offset;
 let vol;
+
 function preload() {
 dings = loadSound("dings.mp3");
 announcement = loadSound("announcement.mp3");
@@ -92,12 +93,6 @@ function setup() {
   colorDropdown.class("dropdown");
   colorDropdown.changed(updateTextColor); //if the option that was initially selected changes, then the .changed operator calls the function to deal with it
   
-  //   saveButton = createButton("Save");
-  // saveButton.position(20, 120);
-  // saveButton.mousePressed(saveCanvas);
-  
-  // size = createSlider(50,1000, 300);
-  // size.position(20,150);
   let radButton = createButton('Pick a mode');
   radButton.position(width/2+300, height+80);
   radButton.addClass("Instruction");
@@ -108,6 +103,7 @@ function setup() {
   radio.option(3);
   radio.option(4);
   radio.class("myRadio");
+
   amp = new p5.Amplitude(); //initialize amp object with the library that deals with analysing amplitude 
 }
 
@@ -273,21 +269,21 @@ function backCover(){
   translate(width/2,height/2)
   beginShape()
   for(let i = 0; i<360; i++){
-   let a = map(volar[i], 0,1, 300,800)
+    let a = map(volar[i], 0,1, 300,800)
     let x = a * cos(i);
     let y = a * sin(i);
-noStroke();
-fill(palette[Math.floor(Math.random()*palette.length)]);
-circle(x, y,10);
-// line(x,y,x+20,y+20)
-// vertex(x, y);
+  noStroke();
+  fill(palette[Math.floor(Math.random()*palette.length)]);
+  circle(x, y,10);
+  // line(x,y,x+20,y+20)
+  // vertex(x, y);
   }
   endShape();
-if(volar.length>360) {
+  if(volar.length>360) {
   volar.splice(0,1)
-}
-pop();
-}
+  }
+  pop();
+  }
 
 function draw() {
 selectedColor = colorDropdown.value();

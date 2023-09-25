@@ -23,6 +23,8 @@ let vol;
 let selectedLabel = ""; 
 let firstName ='';
 let lastName = '';
+let controlsContainer;
+let firstNameDiv, lastNameDiv, modeDiv, soundsDiv;
 
 function preload() {
 dings = loadSound("/audio/dings.mp3");
@@ -30,8 +32,8 @@ announcement = loadSound("/audio/announcement.mp3");
 crowd = loadSound("/audio/crowd.mp3");
 siren = loadSound("/audio/siren.mp3");
 performance = loadSound("/audio/broadway.m4a");
-performance.setVolume(0.5);
-selectedAudio.push(dings, siren, crowd, announcement, performance);
+diner = loadSound("/audio/diner-chatter.mp3")
+selectedAudio.push(dings, siren, crowd, announcement, performance, diner);
 myFont = loadFont('/typeface/NimbusSanL-Bold.ttf');
 newFont = loadFont('/typeface/label.otf');
 }
@@ -40,77 +42,73 @@ function setup() {
   createCanvas(1000, 2000/3); //set the bounds of the canvas to the postcard dimensions
   textAlign(CENTER, CENTER); 
   textWrap(WORD);
-  // angleMode(DEGREES);
-  // frameRate(10);
-  //create a button that will control the play and pause states of the audio stored in variable 'selectedAudio'
-  playButton = createButton('  ▶ '); 
-  playButton.mousePressed(toggleSong); //callback function that will be accessed the minute the mouse is pressed
-  playButton.position(width/2+900-150, height+180); 
-  playButton.size(45,45);
-  playButton.class("myButton"); //adding style to an html element requires assigning it a class so that the css can point to it and decorate it however
-  textFont(myFont); 
 
-  saveButton = createButton('Take Snapshot');
-  saveButton.position(width/2+1000-180, height+180);
-  saveButton.addClass("saveButton");
-  saveButton.mousePressed(takeSnapshot);
+  controlsContainer = createDiv('');
+  controlsContainer.class("controlsContainer");
 
-
-  let textButton = createElement('h6', `Recipient's First Name`);
-  textButton.position(width/2-100-120, height+230);
-  textButton.addClass("Instruction");
-
+  firstNameDiv = createDiv('');
+  firstNameDiv.parent(controlsContainer)
+  let firstNameLabel = createElement('h6', `Recipient's First Name`);
+  firstNameLabel.addClass("Instruction");
+  firstNameLabel.parent(firstNameDiv);
   let input = createInput();
-  input.position(width/2-100-120, height+180);
   input.style("height","40px");
   input.changed(updateText); //callback function that will keep reading the input dialog box to see if there is new information
   input.class("dropdown");
+  input.parent(firstNameDiv);
 
-  let textButton2 = createElement('h6', `Recipient's Last Name`);
-  textButton2.position(width/2+100-140, height+230);
-  textButton2.addClass("Instruction");
-
+  lastNameDiv = createDiv('');
+  lastNameDiv.parent(controlsContainer);
+  let lastNamelabel = createElement('h6', `Recipient's Last Name`);
+  lastNamelabel.addClass("Instruction");
+  lastNamelabel.parent(lastNameDiv);
   let input2 = createInput();
-  input2.position(width/2+100-140, height+180);
   input2.style("height","40px");
   input2.changed(updateText2); //callback function that will keep reading the input dialog box to see if there is new information
   input2.class("dropdown");
+  input2.parent(lastNameDiv);
 
-  let radButton = createElement('h6','Pick a mode');
-  radButton.position(width/2+300-120, height+230);
-  radButton.addClass("Instruction");
+
+  modeDiv = createDiv('');
+  modeDiv.parent(controlsContainer);
+  let radioLabel = createElement('h6','Pick a mode');
+  radioLabel.addClass("Instruction");
+  radioLabel.parent(modeDiv);
   radio = createRadio();
-  radio.position(width/2+300-120, height + 180);
   radio.option(1);
   radio.option(2);
   radio.option(3);
   radio.option(4);
   radio.class("myRadio");
-
+  radio.parent(modeDiv);
     
-  let dropButton = createElement('h6', 'Pick a sound');
-  dropButton.position(width/2+460-120, height+230);
-  dropButton.addClass("Instruction");
 
+  soundsDiv = createDiv('');
+  soundsDiv.parent(controlsContainer);
+  let dropButton = createElement('h6', 'Pick a sound');
+  dropButton.addClass("Instruction");
+  dropButton.parent(soundsDiv);
   audioDropdown = createSelect();
-  audioDropdown.position(width/2+460-120, height+180);
   audioDropdown.option("Subway Turnstiles", 1);
   audioDropdown.option("Manhattan Sirens", 2);
   audioDropdown.option("Union Square Winter Market", 3);
-  audioDropdown.option("NY In-Transit Announcement", 4);
-  audioDropdown.option("Broadway Street Performers", 5);
+  audioDropdown.option("MTA Transit Announcement", 4);
+  audioDropdown.option("Streetside Performances", 5);
+  audioDropdown.option("Diner Time Rush Hour", 6);
   audioDropdown.class("dropdown"); 
   updateAudio();
   audioDropdown.changed(updateAudio); // Call the updateAudio function when the dropdown selection changes
+  audioDropdown.parent(soundsDiv);
 
 
+  colorsDiv = createDiv('');
+  colorsDiv.parent(controlsContainer);
   let subButton = createElement('h6', 'Pick a subway color');
-  subButton.position(width/2+640-120, height+230);
   subButton.addClass("Instruction");
-
+  subButton.parent(colorsDiv);
 
   colorDropdown = createSelect(colorToHex); //the DOM element that allows you to choose one option from a range of available options, in this case the color of the background
-  colorDropdown.position(width/2+640-120, height+180);
+  // colorDropdown.position(width/2+640-120, height+180);
   colorDropdown.option("Purple");
   colorDropdown.option("Green");
   colorDropdown.option("Blue");
@@ -121,10 +119,35 @@ function setup() {
   colorDropdown.option("Lime");
   colorDropdown.option("Red");
   colorDropdown.class("dropdown");
+  colorDropdown.parent(colorsDiv);
   colorDropdown.changed(updateTextColor); //if the option that was initially selected changes, then the .changed operator calls the function to deal with it
   updateTextColor();
 
- 
+
+  playDiv = createDiv('');
+  playDiv.parent(controlsContainer);
+  let playLabel = createElement('h6', 'Play');
+  playLabel.parent(playDiv);
+  playLabel.style("color", "#F7F7FF");
+  playLabel.addClass("Instruction");
+  //create a button that will control the play and pause states of the audio stored in variable 'selectedAudio'
+  playButton = createButton('  ▶ '); 
+  playButton.mousePressed(toggleSong); //callback function that will be accessed the minute the mouse is pressed
+  playButton.size(45,45);
+  playButton.class("myButton"); //adding style to an html element requires assigning it a class so that the css can point to it and decorate it however
+  playButton.parent(playDiv);
+  textFont(myFont); 
+
+  saveDiv = createDiv('');
+  saveDiv.parent(controlsContainer);
+  let saveLabel = createElement('h6', 'Save');
+  saveLabel.style("color", "#F7F7FF");
+  saveLabel.addClass("Instruction");
+  saveLabel.parent(saveDiv);
+  saveButton = createButton('Save Postcard');
+  saveButton.addClass("saveButton");
+  saveButton.mousePressed(takeSnapshot);
+  saveButton.parent(saveDiv);
 
   amp = new p5.Amplitude(); //initialize amp object with the library that deals with analysing amplitude 
 }
@@ -187,12 +210,16 @@ function updateAudio() {
       index = 2;
       break;
     case "4":
-      selectedLabel = "NY IN-TRANSIT ANNOUNCEMENT";
+      selectedLabel = "MTA TRANSIT ANNOUNCEMENT";
       index = 3;
       break;
     case "5":
-      selectedLabel = "BROADWAY STREET PERFORMERS";
+      selectedLabel = "STREETSIDE PERFORMANCES";
       index = 4;
+      break;
+    case "6":
+      selectedLabel = "DINER TIME RUSH HOUR";
+      index = 5;
       break;
     default:
       index=0;
@@ -261,7 +288,7 @@ function nameLabel(){
   for (let i = 0; i < words.length; i++) {
     let testLine = line + words[i] + ' ';
     let testWidth = textWidth(testLine);
-    if (testWidth > 250) { // Adjust the width as needed
+    if (testWidth > 230) { // Adjust the width as needed
       text(line, x, y);
       y += 30; // Adjust the line height as needed
       line = words[i] + ' ';
@@ -281,18 +308,18 @@ function nameLabel(){
 function makeChaos(){
   for (let i = 0; i < textArray1.length; i++) {
     push();
-    strokeWeight(5);
+    strokeWeight(6);
     stroke(palette[Math.floor(Math.random()*palette.length)]);
     translate(textArray1[i].x, textArray1[i].y);
     rotate(r);
     r++;
-    line(-5, -5, offset, offset);
+    line( offset, offset,-5,  -5);
     pop();
   }
 
   for (let i = 0; i < textArray2.length; i++) {
     push();
-    strokeWeight(5);
+    strokeWeight(6);
     stroke(palette[Math.floor(Math.random()*palette.length)]);
     translate(textArray2[i].x, textArray2[i].y);
     rotate(r);
@@ -375,7 +402,7 @@ function makeJitters(){
     // noFill();
     noStroke();
     fill(palette[Math.floor(Math.random()*palette.length)]);
-    circle(textArray1[i].x, textArray1[i].y, offset);
+    circle(textArray1[i].x, textArray1[i].y, offset+random(10,15)*noise(i));
     pop();
 }
 
@@ -383,7 +410,7 @@ for (let i = 0; i < textArray2.length; i++) {
   push();
   noStroke();
   fill(palette[Math.floor(Math.random()*palette.length)]);
-  circle(textArray2[i].x, textArray2[i].y, offset);
+  circle(textArray2[i].x, textArray2[i].y, offset+random(10,15)*noise(i));
   pop();
 }
 
@@ -427,17 +454,17 @@ if (val == 1) {
   makeChaos();
 }
 if (val == 2) {
-  offset = map(vol,0,1,20,600);
-  makeMonster();
-
-}
-if (val == 3) {
   offset = map(vol,0,1,20,300);
   makeHairlines();
 }
-if (val == 4) {
+if (val == 3) {
   offset = map(vol,0,1,10,500);
   makeJitters();
+}
+if (val == 4) {
+
+  offset = map(vol,0,1,20,600);
+  makeMonster();
 }
 nameLabel()
 scale(0.5);

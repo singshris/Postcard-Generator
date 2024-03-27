@@ -35,7 +35,7 @@ performance = loadSound("/audio/broadway.m4a");
 diner = loadSound("/audio/diner-chatter.mp3")
 selectedAudio.push(dings, siren, crowd, announcement, performance, diner);
 myFont = loadFont('/typeface/NimbusSanL-Bold.ttf');
-newFont = loadFont('/typeface/label.otf');
+newFont = loadFont('/typeface/label.otf'); //founders grotesk
 }
 
 function setup() {
@@ -164,23 +164,9 @@ function updateText() {
   firstName = this.value().toUpperCase();
 }
 
-function updateTextPosition() {
-  textArray1 = myFont.textToPoints(inputText, width/2-300, height-180, size, { //
-    sampleFactor: 0.1,
-  });
-  firstName = this.value().toUpperCase();
-}
-
 function updateText2() {
   inputText2 = this.value()[0].toUpperCase();//the variable inputText was created to store whatever the dialog box receives;
   textArray2 = myFont.textToPoints(inputText2, width/2+25, height-180, size, {
-    sampleFactor: 0.1,
-  });
-  lastName = this.value().toUpperCase();
-}
-
-function updateTextPosition2() {
-  textArray2 = myFont.textToPoints(inputText2, width/2+25, height-180, size, { //
     sampleFactor: 0.1,
   });
   lastName = this.value().toUpperCase();
@@ -308,7 +294,7 @@ function nameLabel(){
 function makeChaos(){
   for (let i = 0; i < textArray1.length; i++) {
     push();
-    strokeWeight(6);
+    strokeWeight(5);
     stroke(palette[Math.floor(Math.random()*palette.length)]);
     translate(textArray1[i].x, textArray1[i].y);
     rotate(r);
@@ -319,7 +305,7 @@ function makeChaos(){
 
   for (let i = 0; i < textArray2.length; i++) {
     push();
-    strokeWeight(6);
+    strokeWeight(5);
     stroke(palette[Math.floor(Math.random()*palette.length)]);
     translate(textArray2[i].x, textArray2[i].y);
     rotate(r);
@@ -394,15 +380,12 @@ function makeHairlines(){
 }
 
 
-
 function makeJitters(){
   for (let i = 0; i < textArray1.length; i++) {
     push();
-    // strokeWeight(2);
-    // noFill();
     noStroke();
     fill(palette[Math.floor(Math.random()*palette.length)]);
-    circle(textArray1[i].x, textArray1[i].y, offset+random(10,15)*noise(i));
+    circle(textArray1[i].x, textArray1[i].y, offset+random(8,15)*noise(i));
     pop();
 }
 
@@ -410,7 +393,7 @@ for (let i = 0; i < textArray2.length; i++) {
   push();
   noStroke();
   fill(palette[Math.floor(Math.random()*palette.length)]);
-  circle(textArray2[i].x, textArray2[i].y, offset+random(10,15)*noise(i));
+  circle(textArray2[i].x, textArray2[i].y, offset+random(8,15)*noise(i));
   pop();
 }
 
@@ -428,7 +411,7 @@ function backCover(){
     let y = a * sin(i);
   noStroke();
   fill(palette[Math.floor(Math.random()*palette.length)]);
-  circle(x, y,10);
+  circle(x, y,8);
   // line(x,y,x+20,y+20)
   // vertex(x, y);
   }
@@ -466,7 +449,6 @@ if (val == 4) {
   offset = map(vol,0,1,20,600);
   makeMonster();
 }
-nameLabel()
-scale(0.5);
+nameLabel();
 }
 
